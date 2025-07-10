@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP Style Layout</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #1a1a1a;
+        color: white;
+        overflow-x: hidden;
+      }
+
+      /* 绿色广告位 */
+      .advertisement-section {
+        background: linear-gradient(90deg, #00ff88, #00cc6a);
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      .advertisement-section.hidden {
+        opacity: 0;
+        transform: translateY(-100%);
+        margin-bottom: -60px;
+        pointer-events: none;
+      }
+
+      .ad-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: bold;
+        color: #000;
+      }
+
+      .ad-icon {
+        width: 20px;
+        height: 20px;
+        background: #000;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #00ff88;
+        font-size: 12px;
+      }
+
+      /* 导航菜单 */
+      .navigation {
+        background: #2a2a2a;
+        padding: 15px 0;
+        position: sticky;
+        top: 60px;
+        z-index: 99;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .navigation.ad-hidden {
+        top: 0;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #00ff88;
+      }
+
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 30px;
+      }
+
+      .nav-menu li a {
+        color: #ccc;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .nav-menu li a:hover {
+        color: #00ff88;
+      }
+
+      .auth-buttons {
+        display: flex;
+        gap: 15px;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .btn-login {
+        background: transparent;
+        color: #ccc;
+        border: 1px solid #555;
+      }
+
+      .btn-login:hover {
+        border-color: #00ff88;
+        color: #00ff88;
+      }
+
+      .btn-get {
+        background: #00ff88;
+        color: #000;
+        border: 1px solid #00ff88;
+      }
+
+      .btn-get:hover {
+        background: #00cc6a;
+        transform: translateY(-2px);
+      }
+
+      /* 主要内容区域 */
+      .hero-section {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 100px 20px;
+        position: relative;
+      }
+
+      .hero-title {
+        font-size: 120px;
+        font-weight: bold;
+        color: #87ceeb;
+        margin-bottom: 50px;
+        text-shadow: 0 0 50px rgba(135, 206, 235, 0.3);
+      }
+
+      .hero-shapes {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 50px;
+      }
+
+      .shape {
+        width: 80px;
+        height: 80px;
+        transition: transform 0.3s ease;
+      }
+
+      .shape:hover {
+        transform: scale(1.1) rotate(10deg);
+      }
+
+      .shape-square {
+        background: linear-gradient(45deg, #87ceeb, #4682b4);
+        border-radius: 10px;
+      }
+
+      .shape-circle {
+        background: linear-gradient(45deg, #87ceeb, #4682b4);
+        border-radius: 50%;
+        border: 4px solid #87ceeb;
+      }
+
+      .shape-diamond {
+        background: linear-gradient(45deg, #ff69b4, #da70d6);
+        border-radius: 10px;
+        transform: rotate(45deg);
+      }
+
+      .shape-pill {
+        background: linear-gradient(45deg, #87ceeb, #4682b4);
+        border-radius: 40px;
+        width: 160px;
+      }
+
+      .shape-flower {
+        background: linear-gradient(45deg, #ff69b4, #da70d6);
+        border-radius: 50% 10% 50% 10%;
+      }
+
+      .hero-description {
+        max-width: 600px;
+        font-size: 24px;
+        line-height: 1.5;
+        color: #ccc;
+        margin-bottom: 50px;
+      }
+
+      /* 内容区域 */
+      .content-section {
+        min-height: 100vh;
+        padding: 100px 20px;
+        background: #333;
+      }
+
+      .content-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .content-title {
+        font-size: 48px;
+        margin-bottom: 30px;
+        color: #00ff88;
+      }
+
+      .content-text {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #ccc;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      /* 背景动画效果 */
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(135, 206, 235, 0.03) 2px,
+          rgba(135, 206, 235, 0.03) 4px
+        );
+        animation: float 20s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(1deg);
+        }
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 60px;
+        }
+
+        .nav-menu {
+          display: none;
+        }
+
+        .hero-shapes {
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .shape {
+          width: 60px;
+          height: 60px;
+        }
+
+        .shape-pill {
+          width: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 绿色广告位 -->
+    <div class="advertisement-section" id="advertisement">
+      <div class="ad-content">
+        <div class="ad-icon">📢</div>
+        <span>GSAP is now free for everyone, thanks to Webflow's support!</span>
+      </div>
+    </div>
+
+    <!-- 导航菜单 -->
+    <nav class="navigation" id="navigation">
+      <div class="nav-container">
+        <div class="logo">GSAP</div>
+        <ul class="nav-menu">
+          <li><a href="#">Tools</a></li>
+          <li><a href="#">Showcase</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Learn GSAP</a></li>
+          <li><a href="#">Docs</a></li>
+          <li><a href="#">Demos</a></li>
+        </ul>
+        <div class="auth-buttons">
+          <button class="btn btn-login">Login/Create Account</button>
+          <button class="btn btn-get">Get GSAP</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <section class="hero-section">
+      <h1 class="hero-title">UI</h1>
+      <div class="hero-shapes">
+        <div class="shape shape-square"></div>
+        <div class="shape shape-circle"></div>
+        <div class="shape shape-diamond"></div>
+        <div class="shape shape-pill"></div>
+        <div class="shape shape-flower"></div>
+        <div class="shape shape-square"></div>
+      </div>
+      <p class="hero-description">
+        Create incredible interfaces that captivate and spark joy with every
+        hover, swipe and click
+      </p>
+    </section>
+
+    <!-- 额外内容区域 -->
+    <section class="content-section">
+      <div class="content-container">
+        <h2 class="content-title">Animation Made Easy</h2>
+        <p class="content-text">
+          GSAP is a robust JavaScript toolset that turns developers into
+          animation superheroes. Build high-performance animations that work in
+          every major browser. Animate CSS, SVG, canvas, React, Vue, WebGL,
+          colors, strings, motion paths, generic objects...anything JavaScript
+          can touch!
+        </p>
+      </div>
+    </section>
+
+    <script>
+      // 滚动效果处理
+      // let lastScrollTop = 0;
+      const advertisement = document.getElementById("advertisement");
+      const navigation = document.getElementById("navigation");
+
+      window.addEventListener("scroll", function () {
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+
+        // 广告位隐藏效果和导航菜单吸顶 - 滚轮一滚动就触发
+        if (scrollTop > 0) {
+          advertisement.classList.add("hidden");
+          navigation.classList.add("ad-hidden");
+        } else {
+          advertisement.classList.remove("hidden");
+          navigation.classList.remove("ad-hidden");
+        }
+
+        // lastScrollTop = scrollTop;
+      });
+
+      // 页面加载动画
+      window.addEventListener("load", function () {
+        const shapes = document.querySelectorAll(".shape");
+        shapes.forEach((shape, index) => {
+          shape.style.opacity = "0";
+          shape.style.transform = "translateY(50px)";
+
+          setTimeout(() => {
+            shape.style.transition = "all 0.6s ease";
+            shape.style.opacity = "1";
+            shape.style.transform = "translateY(0)";
+          }, index * 100);
+        });
+      });
+
+      // 形状悬停动画
+      document.querySelectorAll(".shape").forEach((shape) => {
+        shape.addEventListener("mouseenter", function () {
+          this.style.transform += " scale(1.1)";
+        });
+
+        shape.addEventListener("mouseleave", function () {
+          this.style.transform = this.style.transform.replace(
+            " scale(1.1)",
+            ""
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
