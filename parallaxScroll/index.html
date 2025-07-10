@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollSmoother.min.js"></script>
+    <link rel="stylesheet" href="../style/common.css" />
+    <link rel="icon" href="../icon/favicon.ico" />
+    <title>scroll</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background-color: #1a1721;
+        color: white;
+        overscroll-behavior: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+      #parallax-scroll__wrapper #navigation {
+        position: fixed;
+        width: 100vw;
+      }
+
+      #parallax-scroll {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        flex: 1;
+      }
+      ul {
+        height: 100%;
+      }
+      .parallax-scroll__item {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 46px;
+        font-weight: bold;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .parallax-scroll__item:nth-child(1) {
+        background-image: url(../images/image1.png);
+      }
+
+      .parallax-scroll__item:nth-child(2) {
+        background-image: url(../images/image2.png);
+      }
+
+      .parallax-scroll__item:nth-child(3) {
+        background-image: url(../images/image3.png);
+      }
+    </style>
+  </head>
+  <body id="parallax-scroll__wrapper">
+    <script defer src="../commom/common.js"></script>
+    <!-- 绿色广告位 -->
+    <div class="advertisement-section" id="advertisement">
+      <div class="ad-content">
+        <div class="ad-icon">📢</div>
+        <span>GSAP is now free for everyone, thanks to Webflow's support!</span>
+      </div>
+    </div>
+
+    <!-- 导航菜单 -->
+    <nav class="navigation" id="navigation">
+      <div class="nav-container">
+        <div class="logo">GSAP</div>
+        <ul class="nav-menu">
+          <li><a href="../docs/index.html">Home</a></li>
+          <li>
+            <a href="../parallaxScroll/index.html" class="active">Parallax</a>
+          </li>
+          <li>
+            <a href="../scrollTrigger/index.html">ScrollTrigger</a>
+          </li>
+          <li><a href="../scroll/index.html">Scroll</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Learn GSAP</a></li>
+        </ul>
+        <div class="auth-buttons">
+          <button class="btn btn-login">Login/Create Account</button>
+          <button class="btn btn-get">Get GSAP</button>
+        </div>
+      </div>
+    </nav>
+
+    <div id="parallax-scroll">
+      <ul>
+        <li class="parallax-scroll__item">青山如黛夕阳斜，独步云间访仙家</li>
+        <li class="parallax-scroll__item">长桥卧波连两岸，落日熔金映碧川</li>
+        <li class="parallax-scroll__item">庭院深深日影长，绿苔石径花香暗</li>
+      </ul>
+    </div>
+
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+      const listItems = document.querySelectorAll(".parallax-scroll__item");
+      listItems.forEach((el, index) => {
+        gsap.fromTo(
+          el,
+          {
+            // backgroundPositionY: `-${window.innerHeight / 2}px`,
+          },
+          {
+            // backgroundPositionY: `${window.innerHeight / 2}px`,
+            direction: 3,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              scrub: true,
+            },
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
