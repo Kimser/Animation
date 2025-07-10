@@ -184,6 +184,7 @@
     </style>
   </head>
   <body>
+    <script defer src="../commom/common.js"></script>
     <!-- 绿色广告位 -->
     <div class="advertisement-section" id="advertisement">
       <div class="ad-content">
@@ -201,7 +202,7 @@
           <li><a href="#">Showcase</a></li>
           <li><a href="#">Community</a></li>
           <li><a href="#">Learn GSAP</a></li>
-          <li><a href="#">Docs</a></li>
+          <li><a href="../scrollTrigger/index.html">ScrollTrigger</a></li>
           <li><a href="../scroll/index.html">Scroll</a></li>
         </ul>
         <div class="auth-buttons">
@@ -243,27 +244,6 @@
     </section>
 
     <script>
-      // 滚动效果处理
-      // let lastScrollTop = 0;
-      const advertisement = document.getElementById("advertisement");
-      const navigation = document.getElementById("navigation");
-
-      window.addEventListener("scroll", function () {
-        const scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-
-        // 广告位隐藏效果和导航菜单吸顶 - 滚轮一滚动就触发
-        if (scrollTop > 0) {
-          advertisement.classList.add("hidden");
-          navigation.classList.add("ad-hidden");
-        } else {
-          advertisement.classList.remove("hidden");
-          navigation.classList.remove("ad-hidden");
-        }
-
-        // lastScrollTop = scrollTop;
-      });
-
       // 页面加载动画
       window.addEventListener("load", function () {
         const shapes = document.querySelectorAll(".shape");
